@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "261473887401",
+    "firebase_url": "https://basavara-1b616.firebaseio.com",
+    "project_id": "basavara-1b616",
+    "storage_bucket": "basavara-1b616.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261473887401:android:fabd34d097ef91c51bb5b8",
+        "android_client_info": {
+          "package_name": "com.example.basavara"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "261473887401-bneasgubkq1etd024m1f4sdtt9kang49.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.basavara",
+            "certificate_hash": "1eb4310822c28024127b3834f68d6f31d323b078"
+          }
+        },
+        {
+          "client_id": "261473887401-jqcaiah4q3r7hg5f68rhf5mv6jco4pve.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB50G-Kiv3cyacOHptR66kc_9E1hvrm59c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "261473887401-jqcaiah4q3r7hg5f68rhf5mv6jco4pve.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
