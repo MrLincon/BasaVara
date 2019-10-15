@@ -20,10 +20,7 @@ public class BasaAdapter extends FirestoreRecyclerAdapter<Basa, BasaAdapter.Basa
 
     @Override
     protected void onBindViewHolder(@NonNull BasaHolder holder, int position, @NonNull Basa model) {
-        holder.room.setText(model.getRoom());
-        holder.varanda.setText(model.getVaranda());
-        holder.toilet.setText(model.getToilet());
-        holder.extra.setText(model.getExtra());
+        holder.location.setText(model.getLocation());
         holder.vara.setText(model.getVara());
     }
 
@@ -36,18 +33,11 @@ public class BasaAdapter extends FirestoreRecyclerAdapter<Basa, BasaAdapter.Basa
     }
 
     class BasaHolder extends RecyclerView.ViewHolder {
-        TextView room;
-        TextView varanda;
-        TextView toilet;
-        TextView extra;
-        TextView vara;
+        TextView location,vara;
 
         public BasaHolder(View itemView) {
             super(itemView);
-            room = itemView.findViewById(R.id.room);
-            varanda = itemView.findViewById(R.id.varanda);
-            toilet = itemView.findViewById(R.id.toilet);
-            extra = itemView.findViewById(R.id.extra);
+            location = itemView.findViewById(R.id.location);
             vara = itemView.findViewById(R.id.vara);
         }
     }
