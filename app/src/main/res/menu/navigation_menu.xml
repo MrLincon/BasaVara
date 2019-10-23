@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Primary">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/profile"
+                    android:title="Profile"
+                    android:icon="@drawable/ic_account"
+                    android:iconTint="@color/colorPrimary"></item>
+                <item
+                    android:id="@+id/post"
+                    android:title="Post Ad"
+                    android:icon="@drawable/ic_add"
+                    android:iconTint="@color/colorPrimary"></item>
+                <item
+                    android:id="@+id/my_post"
+                    android:title="My Post"
+                    android:icon="@drawable/ic_edit"
+                    android:iconTint="@color/colorPrimary"></item>
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="More">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/feedback"
+                    android:title="Feedback"
+                    android:icon="@drawable/ic_feedback"
+                    android:iconTint="@color/colorPrimary"></item>
+                <item
+                    android:id="@+id/about"
+                    android:title="About"
+                    android:icon="@drawable/ic_about"
+                    android:iconTint="@color/colorPrimary"></item>
+                <item
+                    android:id="@+id/logout"
+                    android:title="Log out"
+                    android:icon="@drawable/ic_exit"
+                    android:iconTint="@color/colorPrimary"></item>
+            </group>
+        </menu>
+    </item>
+
+</menu>
