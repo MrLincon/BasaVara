@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     app:cardElevation="3dp"
     app:cardCornerRadius="3dp"
-    android:layout_margin="5dp"
     app:cardBackgroundColor="#f5f5f5"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground">
@@ -48,25 +47,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image"></TextView>
 
-
-
-        <TextView
-            android:id="@+id/vara"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="TK: 14000"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="20sp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/location"></TextView>
+            app:layout_constraintTop_toBottomOf="@+id/location">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TK: "
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"></TextView>
+
+            <TextView
+                android:id="@+id/vara"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="14000"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="22sp"></TextView>
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
+
