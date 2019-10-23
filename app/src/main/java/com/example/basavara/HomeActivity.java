@@ -1,8 +1,11 @@
 package com.example.basavara;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,9 +15,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.basavara.Authentication.LoginActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -26,6 +31,9 @@ public class HomeActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView toolbarTitle;
     RecyclerView recyclerView;
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+    NavigationView navigationView;
 
     public static final String EXTRA_LOCATION = "com.example.firebaseprofile.EXTRA_LOCATION";
     public static final String EXTRA_VARA = "com.example.firebaseprofile.EXTRA_VARA";
@@ -56,6 +64,22 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitle.setText("BasaVara");
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.open, R.string.close);
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        navigationView = findViewById(R.id.navigation_view_left);
+
+//        if (savedInstanceState == null) {
+//            navigationView.setCheckedItem(R.id.routine);
+//        }
+
+//        For Calling Navigation Item Class
+
+        NavigationItems();
 
         Query query = basa.orderBy("vara", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Basa> options = new FirestoreRecyclerOptions.Builder<Basa>()
@@ -119,6 +143,44 @@ public class HomeActivity extends AppCompatActivity {
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void NavigationItems() {
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                switch (menuItem.getItemId()) {
+                    case R.id.profile:
+                        Toast.makeText(HomeActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.post:
+                        Intent intent = new Intent(HomeActivity.this,PostActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.my_post:
+                        Toast.makeText(HomeActivity.this, "My Post", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.feedback:
+                        Toast.makeText(HomeActivity.this, "Feedback", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.about:
+                        Toast.makeText(HomeActivity.this, "About", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.logout:
+                        FirebaseAuth.getInstance().signOut();
+                        Intent signOut = new Intent(HomeActivity.this, LoginActivity.class);
+                        startActivity(signOut);
+                        finish();
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        break;
+                }
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+
     }
 
     @Override

@@ -69,16 +69,18 @@ public class DetailsActivity extends AppCompatActivity {
 
         clipboardManager = (ClipboardManager) DetailsActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
 
-        copy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        copy.setVisibility(View.GONE);
 
-                clipData = ClipData.newPlainText("contact",Contact);
-                clipboardManager.setPrimaryClip(clipData);
-
-                Toast.makeText(DetailsActivity.this,"copied: "+Contact, Toast.LENGTH_SHORT).show();
-            }
-        });
+//        copy.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                clipData = ClipData.newPlainText("contact",Contact);
+//                clipboardManager.setPrimaryClip(clipData);
+//
+//                Toast.makeText(DetailsActivity.this,"copied: "+Contact, Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         call.setOnClickListener(new View.OnClickListener() {
             @Override
