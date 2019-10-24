@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TextView toolbarTitle;
+    CardView post;
     RecyclerView recyclerView;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
@@ -53,6 +56,7 @@ public class HomeActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         toolbarTitle = findViewById(R.id.toolbar_title);
+        post = findViewById(R.id.post);
 
         recyclerView = findViewById(R.id.recyclerview);
         int topPadding = getResources().getDimensionPixelSize(R.dimen.topPadding);
@@ -65,6 +69,16 @@ public class HomeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitle.setText("BasaVara");
 
+
+
+        post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,PostActivity.class);
+                startActivity(intent);
+            }
+        });
+
         drawerLayout = findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.open, R.string.close);
@@ -72,12 +86,6 @@ public class HomeActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
 
         navigationView = findViewById(R.id.navigation_view_left);
-
-//        if (savedInstanceState == null) {
-//            navigationView.setCheckedItem(R.id.routine);
-//        }
-
-//        For Calling Navigation Item Class
 
         NavigationItems();
 
