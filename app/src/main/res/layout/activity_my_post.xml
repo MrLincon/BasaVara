@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <include
-        android:id="@+id/toolbar_post"
+        android:id="@+id/toolbar_my_post"
         layout="@layout/toolbar_layout"></include>
 
     <ScrollView
@@ -184,7 +184,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="32dp"
                 android:background="@drawable/round_edge_button"
-                android:text="Save"
+                android:text="Update"
                 android:textColor="#fff"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

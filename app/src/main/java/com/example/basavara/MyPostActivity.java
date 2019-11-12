@@ -1,10 +1,5 @@
 package com.example.basavara;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,7 +13,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.basavara.Authentication.LoginActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,7 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PostActivity extends AppCompatActivity {
+public class MyPostActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TextView toolbarTitle;
@@ -47,15 +46,15 @@ public class PostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post);
+        setContentView(R.layout.activity_my_post);
 
-        toolbar = findViewById(R.id.toolbar_post);
+        toolbar = findViewById(R.id.toolbar_my_post);
         toolbarTitle = findViewById(R.id.toolbar_title);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbarTitle.setText("Post Ad");
+        toolbarTitle.setText("My Post");
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -70,6 +69,8 @@ public class PostActivity extends AppCompatActivity {
         contact = findViewById(R.id.contact);
         vara = findViewById(R.id.vara);
         savePost = findViewById(R.id.savePost);
+
+        loadData();
 
         savePost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,22 +99,18 @@ public class PostActivity extends AppCompatActivity {
                     return;
                 }else{
 
-                    ProgressDialog progressDialog = new ProgressDialog(PostActivity.this);
+                    ProgressDialog progressDialog = new ProgressDialog(MyPostActivity.this);
                     progressDialog.setTitle("Updating");
                     progressDialog.setMessage("Please wait a few seconds!");
                     progressDialog.show();
 
                     document_ref = db.collection("rajshahi").document(userID);
 
-                    Map<String, String> userMap = new HashMap<>();
-
-                    userMap.put("location", Location);
-                    userMap.put("address", Address);
-                    userMap.put("details", Details);
-                    userMap.put("contact", Contact);
-                    userMap.put("vara", Vara);
-
-                    document_ref.set(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    document_ref.update("location", Location,
+                            "address", Address,
+                            "details", Details,
+                            "contact", Contact,
+                            "vara", Vara).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             location.setText("");
@@ -125,10 +122,10 @@ public class PostActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(PostActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(MyPostActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
-                    Intent save = new Intent(PostActivity.this, HomeActivity.class);
+                    Intent save = new Intent(MyPostActivity.this, HomeActivity.class);
                     startActivity(save);
                     finish();
 
@@ -137,5 +134,78 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void loadData(){
+
+        document_reference = db.collection("rajshahi").document(userID);
+
+        document_reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                if (documentSnapshot.exists()) {
+
+                    String get_location = documentSnapshot.getString("location");
+                    String get_address = documentSnapshot.getString("address");
+                    String get_details = documentSnapshot.getString("details");
+                    String get_contact = documentSnapshot.getString("contact");
+                    String get_vara = documentSnapshot.getString("vara");
+
+                    location.setText(get_location);
+                    address.setText(get_address);
+                    details.setText(get_details);
+                    contact.setText(get_contact);
+                    vara.setText(get_vara);
+
+                } else {
+//                    Toast.makeText(PostActivity.this, "Information does not exist!", Toast.LENGTH_LONG).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_post_options,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.delete_post:
+                AlertDialog.Builder builder = new AlertDialog.Builder(MyPostActivity.this);
+                builder.setTitle("Are you sure?")
+                        .setMessage("If you delete this, it  will no longer be available in BasaVara database!")
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                document_reference.delete();
+                                location.setText("");
+                                address.setText("");
+                                details.setText("");
+                                contact.setText("");
+                                vara.setText("");
+
+                                Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.show();
+               break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

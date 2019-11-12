@@ -168,7 +168,8 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.my_post:
-                        Toast.makeText(HomeActivity.this, "My Post", Toast.LENGTH_SHORT).show();
+                        Intent my_post = new Intent(HomeActivity.this,MyPostActivity.class);
+                        startActivity(my_post);
                         break;
                     case R.id.feedback:
                         Toast.makeText(HomeActivity.this, "Feedback", Toast.LENGTH_SHORT).show();

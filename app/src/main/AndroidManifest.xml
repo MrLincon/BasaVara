@@ -16,6 +16,9 @@
             android:name=".PostActivity"
             android:parentActivityName=".HomeActivity"></activity>
         <activity
+            android:name=".MyPostActivity"
+            android:parentActivityName=".HomeActivity"></activity>
+        <activity
             android:name=".DetailsActivity"
             android:parentActivityName=".HomeActivity" />
         <activity android:name=".HomeActivity" />
