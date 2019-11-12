@@ -1,53 +1,50 @@
-package com.example.basavara;
+package com.example.basavara.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.basavara.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-public class BasaAdapter extends FirestoreRecyclerAdapter<Basa, BasaAdapter.BasaHolder> {
+public class MyPostsAdapter extends FirestoreRecyclerAdapter<Basa, MyPostsAdapter.MyPostHolder> {
 
     private OnItemClickListener listener;
     private Context mContext;
 
-    public BasaAdapter(@NonNull FirestoreRecyclerOptions<Basa> options) {
+    public MyPostsAdapter(@NonNull FirestoreRecyclerOptions<Basa> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull BasaHolder holder, int position, @NonNull Basa model) {
+    protected void onBindViewHolder(@NonNull MyPostHolder holder, int position, @NonNull Basa model) {
         holder.location.setText(model.getLocation());
         holder.vara.setText(model.getVara());
     }
 
     @NonNull
     @Override
-    public BasaHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.basa_card_layout,
+    public MyPostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_post_card_layout,
                 parent, false);
-        return new BasaHolder(view);
+        return new MyPostHolder(view);
     }
 
-    class BasaHolder extends RecyclerView.ViewHolder {
-        TextView location,vara,address,details;
+    class MyPostHolder extends RecyclerView.ViewHolder {
+        TextView location,vara;
 
-        public BasaHolder(View itemView) {
+        public MyPostHolder(View itemView) {
             super(itemView);
-            location = itemView.findViewById(R.id.location);
-            vara = itemView.findViewById(R.id.vara);
-//            address = itemView.findViewById(R.id.vara);
-//            details = itemView.findViewById(R.id.vara);
+            location = itemView.findViewById(R.id.user_post_location);
+            vara = itemView.findViewById(R.id.user_post_vara);
 
             mContext = itemView.getContext();
 

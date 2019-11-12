@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.basavara">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -12,12 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MyPostsActivity"
+            android:parentActivityName=".HomeActivity"></activity>
         <activity
             android:name=".PostActivity"
-            android:parentActivityName=".HomeActivity"></activity>
+            android:parentActivityName=".HomeActivity" />
         <activity
-            android:name=".MyPostActivity"
-            android:parentActivityName=".HomeActivity"></activity>
+            android:name=".EditPostActivity"
+            android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".DetailsActivity"
             android:parentActivityName=".HomeActivity" />

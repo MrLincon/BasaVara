@@ -27,10 +27,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class MyPostActivity extends AppCompatActivity {
+public class EditPostActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TextView toolbarTitle;
@@ -46,7 +43,7 @@ public class MyPostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_post);
+        setContentView(R.layout.activity_edit_post);
 
         toolbar = findViewById(R.id.toolbar_my_post);
         toolbarTitle = findViewById(R.id.toolbar_title);
@@ -54,7 +51,7 @@ public class MyPostActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbarTitle.setText("My Post");
+        toolbarTitle.setText("Edit Post");
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -69,6 +66,8 @@ public class MyPostActivity extends AppCompatActivity {
         contact = findViewById(R.id.contact);
         vara = findViewById(R.id.vara);
         savePost = findViewById(R.id.savePost);
+
+
 
         loadData();
 
@@ -99,12 +98,12 @@ public class MyPostActivity extends AppCompatActivity {
                     return;
                 }else{
 
-                    ProgressDialog progressDialog = new ProgressDialog(MyPostActivity.this);
+                    ProgressDialog progressDialog = new ProgressDialog(EditPostActivity.this);
                     progressDialog.setTitle("Updating");
                     progressDialog.setMessage("Please wait a few seconds!");
                     progressDialog.show();
 
-                    document_ref = db.collection("rajshahi").document(userID);
+                    document_ref = db.collection("rajshahi").document("iZQbjQAlgJOA92g3bUnC");
 
                     document_ref.update("location", Location,
                             "address", Address,
@@ -122,10 +121,10 @@ public class MyPostActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(MyPostActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(EditPostActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
-                    Intent save = new Intent(MyPostActivity.this, HomeActivity.class);
+                    Intent save = new Intent(EditPostActivity.this, HomeActivity.class);
                     startActivity(save);
                     finish();
 
@@ -138,7 +137,10 @@ public class MyPostActivity extends AppCompatActivity {
 
     public void loadData(){
 
-        document_reference = db.collection("rajshahi").document(userID);
+        final Intent intent = getIntent();
+        String AD_ID = intent.getStringExtra(MyPostsActivity.EXTRA_AD_ID);
+
+        document_reference = db.collection("rajshahi").document(AD_ID);
 
         document_reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -181,7 +183,7 @@ public class MyPostActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.delete_post:
-                AlertDialog.Builder builder = new AlertDialog.Builder(MyPostActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditPostActivity.this);
                 builder.setTitle("Are you sure?")
                         .setMessage("If you delete this, it  will no longer be available in BasaVara database!")
                         .setPositiveButton("Delete", new DialogInterface.OnClickListener() {

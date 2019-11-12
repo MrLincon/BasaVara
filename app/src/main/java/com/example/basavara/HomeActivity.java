@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.basavara.Adapters.Basa;
+import com.example.basavara.Adapters.BasaAdapter;
 import com.example.basavara.Authentication.LoginActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
@@ -168,7 +170,7 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.my_post:
-                        Intent my_post = new Intent(HomeActivity.this,MyPostActivity.class);
+                        Intent my_post = new Intent(HomeActivity.this, MyPostsActivity.class);
                         startActivity(my_post);
                         break;
                     case R.id.feedback:
