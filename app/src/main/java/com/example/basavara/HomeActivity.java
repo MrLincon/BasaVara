@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -174,7 +175,18 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(my_post);
                         break;
                     case R.id.feedback:
-                        Toast.makeText(HomeActivity.this, "Feedback", Toast.LENGTH_SHORT).show();
+
+                        Intent feedback = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + "ahamed_lincon@outlook.com"));
+
+                        try {
+                            startActivity(Intent.createChooser(feedback,"Choose an e-mail client"));
+                            finish();
+                        }catch (android.content.ActivityNotFoundException e){
+                            Toast.makeText(HomeActivity.this, "There is no e-mail clint installed!", Toast.LENGTH_SHORT).show();
+
+                        }
+//                        Intent feedback = new Intent(HomeActivity.this,FeedbackActivity.class);
+//                        startActivity(feedback);
                         break;
                     case R.id.about:
                         Toast.makeText(HomeActivity.this, "About", Toast.LENGTH_SHORT).show();
