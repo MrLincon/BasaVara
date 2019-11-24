@@ -50,7 +50,8 @@ public class DetailsActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setTitle("Details");
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbarTitle.setText("Details");
 //        toolbarTitle.setText("BasaVara");
 
         final Intent intent = getIntent();

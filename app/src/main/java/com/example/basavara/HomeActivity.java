@@ -55,7 +55,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
 
         toolbar = findViewById(R.id.toolbar);
         toolbarTitle = findViewById(R.id.toolbar_title);
@@ -164,7 +164,10 @@ public class HomeActivity extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.profile:
-                        Toast.makeText(HomeActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+                        Intent profile = new Intent(HomeActivity.this,ProfileActivity.class);
+                        startActivity(profile);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                        Toast.makeText(HomeActivity.this, "Profile", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.post:
                         Intent intent = new Intent(HomeActivity.this,PostActivity.class);
@@ -189,7 +192,10 @@ public class HomeActivity extends AppCompatActivity {
 //                        startActivity(feedback);
                         break;
                     case R.id.about:
-                        Toast.makeText(HomeActivity.this, "About", Toast.LENGTH_SHORT).show();
+                        Intent test = new Intent(HomeActivity.this,ProfileActivity.class);
+                        startActivity(test);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                        Toast.makeText(HomeActivity.this, "About", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.logout:
                         FirebaseAuth.getInstance().signOut();
