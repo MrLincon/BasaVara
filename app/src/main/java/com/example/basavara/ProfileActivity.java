@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -32,6 +33,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private TextView user_name,user_email,user_profession,user_blood_group,user_contact;
     private CircularImageView circularImageView;
+    private FloatingActionButton edit;
 
     ProgressBar progressBar;
 
@@ -62,6 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_loading);
         circularImageView = findViewById(R.id.user_image);
 
+        edit = findViewById(R.id.edit_profile);
         progressBar = findViewById(R.id.progress_loading);
         progressBar.setVisibility(View.GONE);
 
@@ -70,6 +73,15 @@ public class ProfileActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         document_reference = db.collection("UserDetails").document(userID);
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent editProfile = new Intent(ProfileActivity.this,EditProfileActivity.class);
+                startActivity(editProfile);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
 
         loadData();
     }

@@ -3,4 +3,26 @@
 
     <string name="open">Navigation Drawer Opened</string>
     <string name="close">Navigation Drawer Closed</string>
+
+    <string-array name="divisions">
+        <item>Dhaka Division</item>
+        <item>Chottogram Division</item>
+        <item>Rajshahi Division</item>
+        <item>Khulna Division</item>
+        <item>Sylhet Division</item>
+        <item>Mymensingh Division</item>
+        <item>Barisal Division</item>
+        <item>Rangpur Division</item>
+    </string-array>
+
+    <string-array name="cities">
+        <item>Dhaka City</item>
+        <item>Chottogram City</item>
+        <item>Rajshahi City</item>
+        <item>Khulna City</item>
+        <item>Sylhet City</item>
+        <item>Mymensingh City</item>
+        <item>Barisal City</item>
+        <item>Rangpur City</item>
+    </string-array>
 </resources>

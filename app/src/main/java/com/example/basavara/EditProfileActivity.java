@@ -14,10 +14,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,10 +47,11 @@ public class EditProfileActivity extends AppCompatActivity {
     private TextView toolbarTitle;
     ProgressBar progressBar;
 
-    EditText user_name,user_email,user_contact,blood_group;
+    Spinner division_spinner;
+    Spinner city_spinner;
+
+    EditText user_name, user_email, user_address, user_contact;
     TextView add_image;
-    RadioGroup professionGroup;
-    RadioButton professionButton;
 
     CircularImageView imageView;
 
@@ -66,6 +70,9 @@ public class EditProfileActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
 
     private Uri mImageUri;
+
+    public String user_division;
+    public String user_city;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,11 +93,46 @@ public class EditProfileActivity extends AppCompatActivity {
         add_image = findViewById(R.id.tv_add_image);
         user_name = findViewById(R.id.name);
         user_email = findViewById(R.id.email);
-        blood_group = findViewById(R.id.blood_group);
+//        user_division = findViewById(R.id.division);
+//        user_city = findViewById(R.id.city);
+        user_address = findViewById(R.id.address);
         user_contact = findViewById(R.id.contact);
         imageView = findViewById(R.id.add_image);
 
-        professionGroup = findViewById(R.id.professionGroup);
+        division_spinner = findViewById(R.id.division);
+        final ArrayAdapter<CharSequence> divisionAdapter = ArrayAdapter.createFromResource(this,
+                R.array.divisions, android.R.layout.simple_spinner_item);
+        divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        division_spinner.setAdapter(divisionAdapter);
+        division_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+               user_division = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        city_spinner = findViewById(R.id.city);
+        final ArrayAdapter<CharSequence> cityAdapter = ArrayAdapter.createFromResource(this,
+                R.array.cities, android.R.layout.simple_spinner_item);
+        cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        city_spinner.setAdapter(cityAdapter);
+        city_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+               user_city = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
 
         add_image.setOnClickListener(new View.OnClickListener() {
@@ -130,26 +172,24 @@ public class EditProfileActivity extends AppCompatActivity {
 
                     String name = documentSnapshot.getString("name");
                     String email = documentSnapshot.getString("email");
-                    String bloodGroup = documentSnapshot.getString("b_group");
+                    String division = documentSnapshot.getString("division");
+                    String city = documentSnapshot.getString("city");
+                    String address = documentSnapshot.getString("address");
                     String contact = documentSnapshot.getString("contact");
                     String url = documentSnapshot.getString("imageUrl");
 
-                    int selectedId = professionGroup.getCheckedRadioButtonId();
-                    professionButton = findViewById(selectedId);
-                    String profession = documentSnapshot.getString("profession");
-
                     user_name.setText(name);
                     user_email.setText(email);
-                    blood_group.setText(bloodGroup);
+                    user_address.setText(address);
                     user_contact.setText(contact);
                     Picasso.get().load(url).error(R.drawable.add_user_pic).into(imageView);
 
-                    if (profession.equals("General")){
-                       RadioButton rb = findViewById(R.id.general);
-                       rb.setChecked(true);
-                    }else if(profession.equals("Nutritionist")){
-                        RadioButton rb = findViewById(R.id.nutritionist);
-                        rb.setChecked(true);
+                    if (division != null) {
+                        int spinnerPosition = divisionAdapter.getPosition(division);
+                        division_spinner.setSelection(spinnerPosition);
+                    }if (city != null) {
+                        int spinnerPosition = cityAdapter.getPosition(city);
+                        city_spinner.setSelection(spinnerPosition);
                     }
 
                 } else {
@@ -164,7 +204,6 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
         progressBar.setVisibility(View.GONE);
-
 
 
     }
@@ -272,19 +311,12 @@ public class EditProfileActivity extends AppCompatActivity {
 
         final String name = user_name.getText().toString().trim();
         final String email = user_email.getText().toString().trim();
-        final String bloodGroup = blood_group.getText().toString().trim();
+        final String division = user_division;
+        final String city = user_city;
+        final String address = user_address.getText().toString().trim();
         final String contact = user_contact.getText().toString().trim();
 
-        int selectedId = professionGroup.getCheckedRadioButtonId();
-        professionButton = findViewById(selectedId);
-        final String profession = professionButton.getText().toString();
 
-
-
-//        if (mImageUri == null){
-//            Toast.makeText(this, "No image selected!", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
         if (name.isEmpty()) {
             user_name.setError("Field must be filled");
             return;
@@ -292,8 +324,9 @@ public class EditProfileActivity extends AppCompatActivity {
         if (email.isEmpty()) {
             user_email.setError("Field must be filled");
             return;
-        } if (bloodGroup.isEmpty()) {
-            blood_group.setError("Field must be filled");
+        }
+        if (address.isEmpty()) {
+            user_address.setError("Field must be filled");
             return;
         }
         if (contact.isEmpty()) {
@@ -319,9 +352,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
                             document_ref.update("name", name,
                                     "email", email,
-                                    "b_group", bloodGroup,
-                                    "contact", contact,
-                                    "profession",profession).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    "division", division,
+                                    "city", city,
+                                    "address", address,
+                                    "contact", contact).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
 
@@ -342,9 +376,10 @@ public class EditProfileActivity extends AppCompatActivity {
                             userMap.put("imageUrl", image_link);
                             userMap.put("name", name);
                             userMap.put("email", email);
-                            userMap.put("b_group", bloodGroup);
+                            userMap.put("division", division);
+                            userMap.put("city", city);
+                            userMap.put("address", address);
                             userMap.put("contact", contact);
-                            userMap.put("profession", profession);
 
                             document_ref.set(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -394,6 +429,6 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }
