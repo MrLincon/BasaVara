@@ -26,7 +26,7 @@ public class MyPostsAdapter extends FirestoreRecyclerAdapter<Basa, MyPostsAdapte
 
     @Override
     protected void onBindViewHolder(@NonNull MyPostHolder holder, int position, @NonNull Basa model) {
-        holder.location.setText(model.getLocation());
+        holder.area.setText(model.getArea());
         holder.vara.setText(model.getVara());
     }
 
@@ -39,11 +39,11 @@ public class MyPostsAdapter extends FirestoreRecyclerAdapter<Basa, MyPostsAdapte
     }
 
     class MyPostHolder extends RecyclerView.ViewHolder {
-        TextView location,vara;
+        TextView area,vara;
 
         public MyPostHolder(View itemView) {
             super(itemView);
-            location = itemView.findViewById(R.id.user_post_location);
+            area = itemView.findViewById(R.id.user_post_location);
             vara = itemView.findViewById(R.id.user_post_vara);
 
             mContext = itemView.getContext();

@@ -28,6 +28,7 @@
             android:background="@color/colorPrimary">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/change_division_layout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:clickable="true"
@@ -37,9 +38,11 @@
 
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center">
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
 
                     <ImageView
                         android:layout_width="wrap_content"

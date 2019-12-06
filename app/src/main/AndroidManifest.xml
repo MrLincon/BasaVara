@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -12,22 +14,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditProfileActivity"
-            android:parentActivityName=".ProfileActivity"></activity>
+        <activity android:name=".SelectDivisionActivity"
+            android:parentActivityName=".HomeActivity"></activity>
         <activity
-            android:name=".ProfileActivity"
+            android:name=".Profile.EditProfileActivity"
+            android:parentActivityName=".Profile.ProfileActivity" />
+        <activity
+            android:name=".Profile.ProfileActivity"
             android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".MyPostsActivity"
             android:parentActivityName=".HomeActivity" />
         <activity
-            android:name=".PostActivity"
+            android:name=".Post.PostActivity"
             android:parentActivityName=".HomeActivity" />
         <activity
-            android:name=".EditPostActivity"
+            android:name=".Post.EditPostActivity"
             android:parentActivityName=".HomeActivity" />
         <activity
-            android:name=".DetailsActivity"
+            android:name=".Post.DetailsActivity"
             android:parentActivityName=".HomeActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".Authentication.LoginActivity">
@@ -42,6 +47,15 @@
         <activity
             android:name=".Authentication.PasswordRecoveryActivity"
             android:parentActivityName=".Authentication.LoginActivity" />
+
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <meta-data
             android:name="preloaded_fonts"

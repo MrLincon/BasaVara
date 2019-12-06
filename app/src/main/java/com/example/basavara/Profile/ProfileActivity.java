@@ -1,4 +1,4 @@
-package com.example.basavara;
+package com.example.basavara.Profile;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.basavara.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView toolbarTitle;
 
-    private TextView user_name,user_email,user_profession,user_blood_group,user_contact;
+    private TextView user_name,user_email,user_division,user_city,user_address,user_contact;
     private CircularImageView circularImageView;
     private FloatingActionButton edit;
 
@@ -58,8 +59,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         user_name = findViewById(R.id.name);
         user_email = findViewById(R.id.email);
-        user_profession = findViewById(R.id.profession);
-        user_blood_group = findViewById(R.id.blood_group);
+        user_division = findViewById(R.id.division);
+        user_city = findViewById(R.id.city);
+        user_address = findViewById(R.id.address);
         user_contact = findViewById(R.id.contact);
         progressBar = findViewById(R.id.progress_loading);
         circularImageView = findViewById(R.id.user_image);
@@ -98,16 +100,18 @@ public class ProfileActivity extends AppCompatActivity {
 
                     String name = documentSnapshot.getString("name");
                     String email = documentSnapshot.getString("email");
-                    String profession = documentSnapshot.getString("profession");
-                    String bloodGroup = documentSnapshot.getString("b_group");
+                    String division = documentSnapshot.getString("division");
+                    String city = documentSnapshot.getString("city");
+                    String address = documentSnapshot.getString("address");
                     String contact = documentSnapshot.getString("contact");
-                    String url = documentSnapshot.getString("imageUrl");
+                    String url = documentSnapshot.getString("thumbImageUrl");
 
                     Picasso.get().load(url).error(R.drawable.user_default).into(circularImageView);
                     user_name.setText(name);
                     user_email.setText(email);
-                    user_profession.setText(profession);
-                    user_blood_group.setText(bloodGroup);
+                    user_division.setText(division);
+                    user_city.setText(city);
+                    user_address.setText(address);
                     user_contact.setText(contact);
 
                 } else {
@@ -134,11 +138,11 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.edit:
-                Intent editProfile = new Intent(ProfileActivity.this,EditProfileActivity.class);
-                startActivity(editProfile);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                return true;
+//            case R.id.edit:
+//                Intent editProfile = new Intent(ProfileActivity.this,EditProfileActivity.class);
+//                startActivity(editProfile);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                return true;
             case R.id.delete_profile:
                 openDialog();
                 return true;
@@ -159,8 +163,9 @@ public class ProfileActivity extends AppCompatActivity {
                         Picasso.get().load(R.drawable.user_default).into(circularImageView);
                         user_name.setText("");
                         user_email.setText("");
-                        user_profession.setText("");
-                        user_blood_group.setText("");
+                        user_division.setText("");
+                        user_city.setText("");
+                        user_address.setText("");
                         user_contact.setText("");
 
                         Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();

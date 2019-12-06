@@ -1,4 +1,4 @@
-package com.example.basavara;
+package com.example.basavara.Post;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,13 +18,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.basavara.HomeActivity;
+import com.example.basavara.R;
 
 public class DetailsActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TextView toolbarTitle;
-    private TextView location,vara,address,details,contact;
+    private TextView name,time,division,city,location,vara,address,details,contact;
     ImageView copy;
     CardView call;
 
@@ -39,6 +41,10 @@ public class DetailsActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         toolbarTitle = findViewById(R.id.toolbar_title);
 
+        name = findViewById(R.id.details_name);
+        time = findViewById(R.id.details_time);
+        division = findViewById(R.id.details_division);
+        city = findViewById(R.id.details_city);
         location = findViewById(R.id.location);
         vara = findViewById(R.id.vara);
         address = findViewById(R.id.address);
@@ -56,12 +62,20 @@ public class DetailsActivity extends AppCompatActivity {
 
         final Intent intent = getIntent();
 
+        String Name = intent.getStringExtra(HomeActivity.EXTRA_NAME);
+        String Time = intent.getStringExtra(HomeActivity.EXTRA_TIME);
+        String Division = intent.getStringExtra(HomeActivity.EXTRA_DIVISION);
+        String City = intent.getStringExtra(HomeActivity.EXTRA_CITY);
         String Location = intent.getStringExtra(HomeActivity.EXTRA_LOCATION);
         String Vara = intent.getStringExtra(HomeActivity.EXTRA_VARA);
         String Address = intent.getStringExtra(HomeActivity.EXTRA_ADDRESS);
         String Details = intent.getStringExtra(HomeActivity.EXTRA_DETAILS);
         final String Contact = intent.getStringExtra(HomeActivity.EXTRA_CONTACT);
 
+        name.setText(Name);
+        time.setText(Time);
+        division.setText(Division);
+        city.setText(City);
         location.setText(Location);
         vara.setText(Vara);
         address.setText(Address);

@@ -6,14 +6,18 @@ import java.util.Date;
 
 public class Basa {
 
-    private String location,vara,address,details,contact,ad_id,user_id;
+    private String name,email,division,city,area,vara,address,details,contact,ad_id,user_id;
     private @ServerTimestamp Date timestamp;
 
     public Basa() {
     }
 
-    public Basa(String location, String vara, String address, String details, String contact, String ad_id, String user_id, Date timestamp) {
-        this.location = location;
+    public Basa(String name, String email, String division, String city, String area, String vara, String address, String details, String contact, String ad_id, String user_id, Date timestamp) {
+        this.name = name;
+        this.email = email;
+        this.division = division;
+        this.city = city;
+        this.area = area;
         this.vara = vara;
         this.address = address;
         this.details = details;
@@ -23,12 +27,44 @@ public class Basa {
         this.timestamp = timestamp;
     }
 
-    public String getLocation() {
-        return location;
+    public String getName() {
+        return name;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDivision() {
+        return division;
+    }
+
+    public void setDivision(String division) {
+        this.division = division;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public String getVara() {

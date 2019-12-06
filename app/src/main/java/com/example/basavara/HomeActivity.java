@@ -17,12 +17,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.basavara.Adapters.Basa;
 import com.example.basavara.Adapters.BasaAdapter;
 import com.example.basavara.Authentication.LoginActivity;
+import com.example.basavara.Post.DetailsActivity;
+import com.example.basavara.Post.PostActivity;
+import com.example.basavara.Profile.ProfileActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +34,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -41,6 +49,12 @@ public class HomeActivity extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
 
+    CardView chng_division;
+
+    public static final String EXTRA_NAME = "com.example.firebaseprofile.EXTRA_NAME";
+    public static final String EXTRA_TIME = "com.example.firebaseprofile.EXTRA_TIME";
+    public static final String EXTRA_DIVISION = "com.example.firebaseprofile.EXTRA_DIVISION";
+    public static final String EXTRA_CITY = "com.example.firebaseprofile.EXTRA_CITY";
     public static final String EXTRA_LOCATION = "com.example.firebaseprofile.EXTRA_LOCATION";
     public static final String EXTRA_VARA = "com.example.firebaseprofile.EXTRA_VARA";
     public static final String EXTRA_ADDRESS = "com.example.firebaseprofile.EXTRA_ADDRESS";
@@ -77,7 +91,7 @@ public class HomeActivity extends AppCompatActivity {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this,PostActivity.class);
+                Intent intent = new Intent(HomeActivity.this, PostActivity.class);
                 startActivity(intent);
             }
         });
@@ -110,22 +124,40 @@ public class HomeActivity extends AppCompatActivity {
                 Basa basa = documentSnapshot.toObject(Basa.class);
                 String id = documentSnapshot.getId();
 
-                Intent intent = new Intent(HomeActivity.this,DetailsActivity.class);
+                Intent intent = new Intent(HomeActivity.this, DetailsActivity.class);
 
-                String location = basa.getLocation();
+                String name = basa.getName();
+                SimpleDateFormat spf = new SimpleDateFormat("MMM dd, YYYY");
+                String date = spf.format(basa.getTimestamp());
+                String division = basa.getDivision();
+                String city = basa.getCity();
+                String area = basa.getArea();
                 String vara = basa.getVara();
                 String details = basa.getDetails();
                 String address = basa.getAddress();
                 String contact = basa.getContact();
 
-                intent.putExtra(EXTRA_LOCATION,location);
+                intent.putExtra(EXTRA_NAME,name);
+                intent.putExtra(EXTRA_TIME,date);
+                intent.putExtra(EXTRA_DIVISION,division);
+                intent.putExtra(EXTRA_CITY,city);
+                intent.putExtra(EXTRA_LOCATION,area);
                 intent.putExtra(EXTRA_VARA,vara);
                 intent.putExtra(EXTRA_ADDRESS,address);
                 intent.putExtra(EXTRA_DETAILS,details);
                 intent.putExtra(EXTRA_CONTACT,contact);
 
                 startActivity(intent);
-//                Toast.makeText(HomeActivity.this, id, Toast.LENGTH_SHORT).show();
+
+                chng_division = findViewById(R.id.change_division_layout);
+                chng_division.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent changeDivision = new Intent(HomeActivity.this,SelectDivisionActivity.class);
+                        startActivity(changeDivision);
+                        Toast.makeText(HomeActivity.this, "Working", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
@@ -164,7 +196,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.profile:
-                        Intent profile = new Intent(HomeActivity.this,ProfileActivity.class);
+                        Intent profile = new Intent(HomeActivity.this, ProfileActivity.class);
                         startActivity(profile);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //                        Toast.makeText(HomeActivity.this, "Profile", Toast.LENGTH_SHORT).show();
@@ -192,9 +224,9 @@ public class HomeActivity extends AppCompatActivity {
 //                        startActivity(feedback);
                         break;
                     case R.id.about:
-                        Intent test = new Intent(HomeActivity.this,ProfileActivity.class);
-                        startActivity(test);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                        Intent test = new Intent(HomeActivity.this,ProfileActivity.class);
+//                        startActivity(test);
+//                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //                        Toast.makeText(HomeActivity.this, "About", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.logout:

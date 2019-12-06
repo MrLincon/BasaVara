@@ -1,4 +1,4 @@
-package com.example.basavara;
+package com.example.basavara.Post;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -18,6 +18,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.basavara.HomeActivity;
+import com.example.basavara.MyPostsActivity;
+import com.example.basavara.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
