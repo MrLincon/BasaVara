@@ -134,9 +134,11 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+        int cityArray = R.array.underRajshahi;
+
         city_spinner = findViewById(R.id.city);
         final ArrayAdapter<CharSequence> cityAdapter = ArrayAdapter.createFromResource(this,
-                R.array.cities, android.R.layout.simple_spinner_item);
+                cityArray, android.R.layout.simple_spinner_item);
         cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         city_spinner.setAdapter(cityAdapter);
         city_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

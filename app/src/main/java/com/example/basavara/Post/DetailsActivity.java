@@ -26,7 +26,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TextView toolbarTitle;
-    private TextView name,time,division,city,location,vara,address,details,contact;
+    private TextView name,time,division,area,location,vara,address,details,contact;
     ImageView copy;
     CardView call;
 
@@ -44,8 +44,8 @@ public class DetailsActivity extends AppCompatActivity {
         name = findViewById(R.id.details_name);
         time = findViewById(R.id.details_time);
         division = findViewById(R.id.details_division);
-        city = findViewById(R.id.details_city);
-        location = findViewById(R.id.location);
+        location = findViewById(R.id.details_location);
+        area = findViewById(R.id.area);
         vara = findViewById(R.id.vara);
         address = findViewById(R.id.address);
         details = findViewById(R.id.details);
@@ -65,8 +65,8 @@ public class DetailsActivity extends AppCompatActivity {
         String Name = intent.getStringExtra(HomeActivity.EXTRA_NAME);
         String Time = intent.getStringExtra(HomeActivity.EXTRA_TIME);
         String Division = intent.getStringExtra(HomeActivity.EXTRA_DIVISION);
-        String City = intent.getStringExtra(HomeActivity.EXTRA_CITY);
         String Location = intent.getStringExtra(HomeActivity.EXTRA_LOCATION);
+        String Area = intent.getStringExtra(HomeActivity.EXTRA_AREA);
         String Vara = intent.getStringExtra(HomeActivity.EXTRA_VARA);
         String Address = intent.getStringExtra(HomeActivity.EXTRA_ADDRESS);
         String Details = intent.getStringExtra(HomeActivity.EXTRA_DETAILS);
@@ -75,8 +75,8 @@ public class DetailsActivity extends AppCompatActivity {
         name.setText(Name);
         time.setText(Time);
         division.setText(Division);
-        city.setText(City);
         location.setText(Location);
+        area.setText(Area);
         vara.setText(Vara);
         address.setText(Address);
         details.setText(Details);

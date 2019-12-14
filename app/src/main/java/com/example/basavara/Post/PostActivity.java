@@ -41,10 +41,10 @@ public class PostActivity extends AppCompatActivity {
     private Button savePost;
 
     Spinner post_division_spinner;
-    Spinner post_city_spinner;
+    Spinner post_location_spinner;
 
     public String user_division;
-    public String user_city;
+    public String user_location;
 
     private FirebaseAuth mAuth;
     private String userID;
@@ -102,15 +102,15 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
-        post_city_spinner = findViewById(R.id.city);
+        post_location_spinner = findViewById(R.id.location);
         final ArrayAdapter<CharSequence> cityAdapter = ArrayAdapter.createFromResource(this,
-                R.array.cities, android.R.layout.simple_spinner_item);
+                R.array.underRajshahi, android.R.layout.simple_spinner_item);
         cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        post_city_spinner.setAdapter(cityAdapter);
-        post_city_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        post_location_spinner.setAdapter(cityAdapter);
+        post_location_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                user_city = parent.getItemAtPosition(position).toString();
+                user_location = parent.getItemAtPosition(position).toString();
             }
 
             @Override
@@ -128,7 +128,7 @@ public class PostActivity extends AppCompatActivity {
                     String Name = documentSnapshot.getString("name");
                     String Email = documentSnapshot.getString("email");
                     String Division = documentSnapshot.getString("division");
-                    String City = documentSnapshot.getString("city");
+                    String Location = documentSnapshot.getString("location");
                     String Address = documentSnapshot.getString("address");
                     String Contact = documentSnapshot.getString("contact");
 
@@ -140,9 +140,9 @@ public class PostActivity extends AppCompatActivity {
                     if (Division != null) {
                         int spinnerPosition = divisionAdapter.getPosition(Division);
                         post_division_spinner.setSelection(spinnerPosition);
-                    }if (City != null) {
-                        int spinnerPosition = cityAdapter.getPosition(City);
-                        post_city_spinner.setSelection(spinnerPosition);
+                    }if (Location != null) {
+                        int spinnerPosition = cityAdapter.getPosition(Location);
+                        post_location_spinner.setSelection(spinnerPosition);
                     }
 
                 } else {
@@ -161,7 +161,7 @@ public class PostActivity extends AppCompatActivity {
                 String Name = name.getText().toString();
                 String Email = email.getText().toString();
                 String Division = user_division;
-                String City = user_city;
+                String Location = user_location;
                 String Area = area.getText().toString().trim();
                 String Address = address.getText().toString().trim();
                 String Details = details.getText().toString().trim();
@@ -209,7 +209,7 @@ public class PostActivity extends AppCompatActivity {
                     basa.setName(Name);
                     basa.setEmail(Email);
                     basa.setDivision(Division);
-                    basa.setCity(City);
+                    basa.setLocation(Location);
                     basa.setArea(Area);
                     basa.setAddress(Address);
                     basa.setDetails(Details);

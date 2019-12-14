@@ -6,17 +6,17 @@ import java.util.Date;
 
 public class Basa {
 
-    private String name,email,division,city,area,vara,address,details,contact,ad_id,user_id;
+    private String name,email,division,location,area,vara,address,details,contact,ad_id,user_id;
     private @ServerTimestamp Date timestamp;
 
     public Basa() {
     }
 
-    public Basa(String name, String email, String division, String city, String area, String vara, String address, String details, String contact, String ad_id, String user_id, Date timestamp) {
+    public Basa(String name, String email, String division, String location, String area, String vara, String address, String details, String contact, String ad_id, String user_id, Date timestamp) {
         this.name = name;
         this.email = email;
         this.division = division;
-        this.city = city;
+        this.location = location;
         this.area = area;
         this.vara = vara;
         this.address = address;
@@ -51,12 +51,12 @@ public class Basa {
         this.division = division;
     }
 
-    public String getCity() {
-        return city;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getArea() {

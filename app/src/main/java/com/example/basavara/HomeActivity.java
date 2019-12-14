@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,6 +43,7 @@ import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private static final String TAG = "HomeActivity";
     private Toolbar toolbar;
     private TextView toolbarTitle;
     CardView post;
@@ -49,13 +52,18 @@ public class HomeActivity extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
 
-    CardView chng_division;
+    LinearLayout chng_division;
+
+    TextView division,location;
+
+    public String selectDivision;
+    public String selectLocation;
 
     public static final String EXTRA_NAME = "com.example.firebaseprofile.EXTRA_NAME";
     public static final String EXTRA_TIME = "com.example.firebaseprofile.EXTRA_TIME";
     public static final String EXTRA_DIVISION = "com.example.firebaseprofile.EXTRA_DIVISION";
-    public static final String EXTRA_CITY = "com.example.firebaseprofile.EXTRA_CITY";
     public static final String EXTRA_LOCATION = "com.example.firebaseprofile.EXTRA_LOCATION";
+    public static final String EXTRA_AREA = "com.example.firebaseprofile.EXTRA_AREA";
     public static final String EXTRA_VARA = "com.example.firebaseprofile.EXTRA_VARA";
     public static final String EXTRA_ADDRESS = "com.example.firebaseprofile.EXTRA_ADDRESS";
     public static final String EXTRA_DETAILS = "com.example.firebaseprofile.EXTRA_DETAILS";
@@ -66,10 +74,16 @@ public class HomeActivity extends AppCompatActivity {
 
     private BasaAdapter adapter;
 
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String Division = "division";
+    public static final String Location = "location";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Log.d(TAG, "onCreate: inside onCreate");
 
         toolbar = findViewById(R.id.toolbar);
         toolbarTitle = findViewById(R.id.toolbar_title);
@@ -86,7 +100,9 @@ public class HomeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitle.setText("BasaVara");
 
+        loadData();
 
+        //Post Button
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +111,10 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //................
+
+        //Navigation drawer layout
 
         drawerLayout = findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
@@ -106,7 +126,32 @@ public class HomeActivity extends AppCompatActivity {
 
         NavigationItems();
 
-        Query query = basa.orderBy("vara", Query.Direction.ASCENDING);
+        //........................
+
+        //Change division options
+
+        chng_division = findViewById(R.id.change_division_layout);
+        chng_division.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent changeDivision = new Intent(HomeActivity.this,SelectDivisionActivity.class);
+                startActivity(changeDivision);
+            }
+        });
+
+        //................
+
+
+    }
+
+    //Recyclerviewer for firebase items
+
+    private void FirebaseLoadData() {
+
+        Query query = basa.whereEqualTo("division",selectDivision)
+                .whereEqualTo("location",selectLocation)
+                .whereEqualTo("location",selectLocation)
+                .orderBy("timestamp", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Basa> options = new FirestoreRecyclerOptions.Builder<Basa>()
                 .setQuery(query, Basa.class)
                 .build();
@@ -130,7 +175,7 @@ public class HomeActivity extends AppCompatActivity {
                 SimpleDateFormat spf = new SimpleDateFormat("MMM dd, YYYY");
                 String date = spf.format(basa.getTimestamp());
                 String division = basa.getDivision();
-                String city = basa.getCity();
+                String location = basa.getLocation();
                 String area = basa.getArea();
                 String vara = basa.getVara();
                 String details = basa.getDetails();
@@ -140,29 +185,41 @@ public class HomeActivity extends AppCompatActivity {
                 intent.putExtra(EXTRA_NAME,name);
                 intent.putExtra(EXTRA_TIME,date);
                 intent.putExtra(EXTRA_DIVISION,division);
-                intent.putExtra(EXTRA_CITY,city);
-                intent.putExtra(EXTRA_LOCATION,area);
+                intent.putExtra(EXTRA_LOCATION,location);
+                intent.putExtra(EXTRA_AREA,area);
                 intent.putExtra(EXTRA_VARA,vara);
                 intent.putExtra(EXTRA_ADDRESS,address);
                 intent.putExtra(EXTRA_DETAILS,details);
                 intent.putExtra(EXTRA_CONTACT,contact);
 
                 startActivity(intent);
-
-                chng_division = findViewById(R.id.change_division_layout);
-                chng_division.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent changeDivision = new Intent(HomeActivity.this,SelectDivisionActivity.class);
-                        startActivity(changeDivision);
-                        Toast.makeText(HomeActivity.this, "Working", Toast.LENGTH_SHORT).show();
-                    }
-                });
             }
         });
+    }
 
+    //...................
+
+
+    //    Shared Preference
+
+    public void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        selectDivision = sharedPreferences.getString(Division, "");
+        selectLocation = sharedPreferences.getString(Location, "");
+    }
+
+    public void updateData() {
+//        division = findViewById(R.id.division);
+        location = findViewById(R.id.location);
+
+//        division.setText(selectDivision);
+        location.setText(selectLocation);
 
     }
+
+    //..........................
+
+    //Options Menu
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -187,6 +244,10 @@ public class HomeActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    //.......................
+
+    //Navigation Drawer
 
     public void NavigationItems() {
 
@@ -244,10 +305,23 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    //............................
+
     @Override
     public void onStart() {
         super.onStart();
+        loadData();
+        updateData();
+        FirebaseLoadData();
         adapter.startListening();
+    }
+
+    @Override
+    protected void onResume() {
+        loadData();
+        updateData();
+        FirebaseLoadData();
+        super.onResume();
     }
 
     @Override

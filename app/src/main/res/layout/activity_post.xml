@@ -111,7 +111,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="center"
-                android:text="City"
+                android:text="Location"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -119,7 +119,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/division"></TextView>
 
             <Spinner
-                android:id="@+id/city"
+                android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginStart="16dp"
@@ -145,7 +145,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/city"></TextView>
+                app:layout_constraintTop_toBottomOf="@+id/location"></TextView>
 
             <EditText
                 android:id="@+id/area"

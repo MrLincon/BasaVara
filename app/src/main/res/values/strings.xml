@@ -15,14 +15,15 @@
         <item>Rangpur</item>
     </string-array>
 
-    <string-array name="cities">
-        <item>Dhaka</item>
-        <item>Chottogram</item>
-        <item>Rajshahi</item>
-        <item>Khulna</item>
-        <item>Sylhet</item>
-        <item>Mymensingh</item>
-        <item>Barisal</item>
-        <item>Rangpur</item>
+    <string-array name="underRajshahi">
+        <item>Sadar</item>
+        <item>Shaheb Bazar</item>
+        <item>New Market</item>
+        <item>Uposhahar</item>
+        <item>Padma Residential</item>
+        <item>Sagorpara</item>
+        <item>Kazla</item>
+        <item>Talaimari</item>
+        <item>Court</item>
     </string-array>
 </resources>

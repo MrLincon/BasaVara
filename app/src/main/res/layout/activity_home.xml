@@ -28,7 +28,6 @@
             android:background="@color/colorPrimary">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/change_division_layout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:clickable="true"
@@ -37,26 +36,32 @@
                 app:cardBackgroundColor="@color/colorPrimary">
 
                 <LinearLayout
+                    android:id="@+id/change_division_layout"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:paddingLeft="16dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_location"
-                        android:layout_marginRight="16dp"></ImageView>
+                       <ImageView
+                           android:id="@+id/loc"
+                           android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:layout_marginRight="8dp"
+                           android:src="@drawable/ic_location"></ImageView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Rajshahi"
-                        android:textSize="18sp"
-                        android:gravity="center"
-                        android:textColor="#fff"></TextView>
+                       <TextView
+                           android:id="@+id/location"
+                           android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:layout_gravity="center"
+                           android:layout_marginStart="8dp"
+                           android:gravity="center"
+                           android:text=""
+                           android:textColor="#fff"
+                           android:textSize="18sp"></TextView>
 
                 </LinearLayout>
 
