@@ -9,7 +9,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,14 +37,24 @@ public class EditPostActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TextView toolbarTitle;
-    private TextView location,address,details,contact,vara;
+    private TextView area,address,details,contact,vara;
     private Button savePost;
+
+    private Spinner edit_division_spinner;
+    private Spinner edit_location_spinner;
+
+    public String user_division;
+    public String user_location;
+
+    private String get_location,get_division;
 
     private FirebaseAuth mAuth;
     private String userID;
     private DocumentReference document_ref,document_reference;
 
     private FirebaseFirestore db;
+
+    private String AD_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,29 +76,33 @@ public class EditPostActivity extends AppCompatActivity {
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        location = findViewById(R.id.area);
+        area = findViewById(R.id.area);
         address = findViewById(R.id.address);
         details = findViewById(R.id.details);
         contact = findViewById(R.id.contact);
         vara = findViewById(R.id.vara);
         savePost = findViewById(R.id.savePost);
 
-
+        final Intent intent = getIntent();
+        AD_ID = intent.getStringExtra(MyPostsActivity.EXTRA_AD_ID);
 
         loadData();
+
 
         savePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String Location = location.getText().toString().trim();
+                String Division = user_division;
+                String Location = user_location;
+                String Area = area.getText().toString().trim();
                 String Address = address.getText().toString().trim();
                 String Details = details.getText().toString().trim();
                 String Contact = contact.getText().toString().trim();
                 String Vara = vara.getText().toString().trim();
 
 
-                if (Location.isEmpty()){
-                    location.setError("All field must be filled");
+                if (Area.isEmpty()){
+                    area.setError("All field must be filled");
                     return;
                 }if (Address.isEmpty()){
                     address.setError("All field must be filled");
@@ -106,16 +123,18 @@ public class EditPostActivity extends AppCompatActivity {
                     progressDialog.setMessage("Please wait a few seconds!");
                     progressDialog.show();
 
-                    document_ref = db.collection("rajshahi").document("iZQbjQAlgJOA92g3bUnC");
+                    document_ref = db.collection("rajshahi").document(AD_ID);
 
-                    document_ref.update("location", Location,
+                    document_ref.update("division", Division,
+                            "location", Location,
+                            "area", Area,
                             "address", Address,
                             "details", Details,
                             "contact", Contact,
                             "vara", Vara).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            location.setText("");
+                            area.setText("");
                             address.setText("");
                             details.setText("");
                             contact.setText("");
@@ -139,9 +158,40 @@ public class EditPostActivity extends AppCompatActivity {
     }
 
     public void loadData(){
+        edit_division_spinner = findViewById(R.id.editDivision);
+        final ArrayAdapter<CharSequence> editDivisionAdapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                R.array.divisions, android.R.layout.simple_spinner_item);
+        editDivisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        edit_division_spinner.setAdapter(editDivisionAdapter);
+        edit_division_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                user_division = parent.getItemAtPosition(position).toString();
+            }
 
-        final Intent intent = getIntent();
-        String AD_ID = intent.getStringExtra(MyPostsActivity.EXTRA_AD_ID);
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        edit_location_spinner = findViewById(R.id.editLocation);
+        final ArrayAdapter<CharSequence> editLocationAdapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                R.array.underRajshahi, android.R.layout.simple_spinner_item);
+        editLocationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        edit_location_spinner.setAdapter(editLocationAdapter);
+        edit_location_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                user_location = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         document_reference = db.collection("rajshahi").document(AD_ID);
 
@@ -151,13 +201,23 @@ public class EditPostActivity extends AppCompatActivity {
 
                 if (documentSnapshot.exists()) {
 
-                    String get_location = documentSnapshot.getString("location");
+                    get_division = documentSnapshot.getString("division");
+                    get_location = documentSnapshot.getString("location");
+                    String get_area = documentSnapshot.getString("area");
                     String get_address = documentSnapshot.getString("address");
                     String get_details = documentSnapshot.getString("details");
                     String get_contact = documentSnapshot.getString("contact");
                     String get_vara = documentSnapshot.getString("vara");
 
-                    location.setText(get_location);
+                    if (get_division != null) {
+                        int spinnerPosition = editDivisionAdapter.getPosition(get_division);
+                        edit_division_spinner.setSelection(spinnerPosition);
+                    }if (get_location != null) {
+                        int spinnerPosition = editLocationAdapter.getPosition(get_location);
+                        edit_location_spinner.setSelection(spinnerPosition);
+                    }
+
+                    area.setText(get_area);
                     address.setText(get_address);
                     details.setText(get_details);
                     contact.setText(get_contact);
@@ -173,6 +233,8 @@ public class EditPostActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
     @Override
@@ -194,7 +256,7 @@ public class EditPostActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
 
                                 document_reference.delete();
-                                location.setText("");
+                                area.setText("");
                                 address.setText("");
                                 details.setText("");
                                 contact.setText("");
@@ -212,5 +274,10 @@ public class EditPostActivity extends AppCompatActivity {
                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 }
